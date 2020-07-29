@@ -9,13 +9,9 @@ RSpec.feature "Users", type: :feature do
 
       click_link 'New Series'
 
-      sleep 2
-
       fill_in 'Name', with:'Felipe'
       fill_in 'Email', with:'higor@higor'
       fill_in 'Age', with:10
-
-      sleep 3
 
       click_button 'Create User'
 
@@ -29,13 +25,8 @@ RSpec.feature "Users", type: :feature do
 
       click_link 'New Series'
 
-      sleep 1
-
       fill_in 'Name', with:'Felipe'
       fill_in 'Email', with:'higor@higor'
-
-
-      sleep 1
 
       click_button 'Create User'
 
@@ -44,56 +35,53 @@ RSpec.feature "Users", type: :feature do
     end
 
   end
-end
 
-context "Editando usuario" do
-  scenario "Deve ser atualizado com sucesso"  do
+  context "Editando usuario" do
+    let!(:user) {FactoryBot.create(:user)}
+    let!(:infos) {FactoryBot.create(:info, user:user)}
+    scenario "Deve ser atualizado com sucesso"  do
+      visit users_path
 
-    user = create(:user)
-    infos= create(:info,user_id:user.id)
+      click_link 'Edit'
 
-    visit users_path
-    sleep 5
-    click_link 'Edit'
-    sleep 3
+      fill_in 'Name', with:'Felipe'
+      fill_in 'Email', with:'higor@higor'
+      fill_in 'Age', with:10
 
-    fill_in 'Name', with:'Felipe'
-    fill_in 'Email', with:'higor@higor'
-    fill_in 'Age', with:10
+      click_button 'Update User'
 
-    sleep 2
+      expect(page).to have_content("User was successfully updated.")
 
-    click_button 'Update User'
+    end
 
-    expect(page).to have_content("User was successfully updated.")
+    scenario "Não deve ser atualizado"  do
 
-    sleep 1
+      visit users_path
+      sleep 1
+      click_link 'Edit'
 
+      fill_in 'Name', with:'Felipe'
+      fill_in 'Email', with:'higor@higor'
+      fill_in 'Age', with:''
 
+      click_button 'Update User'
+
+      expect(page).to have_content("age can't be blank")
+
+    end
   end
 
-  scenario "Não deve ser atualizado"  do
-    user = create(:user)
-    infos= create(:info,user_id:user.id)
+  context "Excluindo usuario" do
 
-    visit users_path
-    sleep 1
-    click_link 'Edit'
-    sleep 3
+    scenario "Deve excluir com sucesso" do
+      user = create(:user)
+      infos= create(:info,user_id:user.id)
+      visit users_path
+      click_link 'Destroy'
+      expect(page).to have_content("User was successfully destroyed.")
 
-    fill_in 'Name', with:'Felipe'
-    fill_in 'Email', with:'higor@higor'
-    fill_in 'Age', with:''
-
-    sleep 2
-
-    click_button 'Update User'
-
-    expect(page).to have_content("age can't be blank")
-
-    sleep 1
+    end
 
   end
-
 
 end
