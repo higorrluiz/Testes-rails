@@ -1,8 +1,7 @@
 class User < ApplicationRecord
   has_one :info, dependent: :destroy
   accepts_nested_attributes_for :info
-  validates :password, confirmation: true
-
+  validates :name,:email, presence: true
   
 
   def resumo
