@@ -21,7 +21,7 @@ RSpec.feature "Users", type: :feature do
 
       expect(page).to have_content('User was successfully created')
 
-      end
+    end
 
     scenario "nao deveria criar usuario" do
 
@@ -41,13 +41,13 @@ RSpec.feature "Users", type: :feature do
 
       expect(page).to have_content("age can't be blank")
 
-      end
-
     end
+
+  end
 end
 
 context "Editando usuario" do
-  scenario "Deve ser criado com sucesso" , js:true do
+  scenario "Deve ser atualizado com sucesso"  do
 
     user = create(:user)
     infos= create(:info,user_id:user.id)
@@ -72,7 +72,9 @@ context "Editando usuario" do
 
   end
 
-  scenario "Não deve ser criado" , js:true do
+  scenario "Não deve ser atualizado"  do
+    user = create(:user)
+    infos= create(:info,user_id:user.id)
 
     visit users_path
     sleep 1
@@ -91,7 +93,7 @@ context "Editando usuario" do
 
     sleep 1
 
-    end
+  end
 
 
 end
