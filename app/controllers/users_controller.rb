@@ -33,14 +33,13 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   def update
-    respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+        redirect_to users_path, notice: 'User was successfully updated.'
 
       else
-        format.html { render :edit }
+        render :edit
       end
-    end
+
   end
 
   # DELETE /users/1

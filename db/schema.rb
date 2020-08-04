@@ -12,20 +12,6 @@
 
 ActiveRecord::Schema.define(version: 2020_07_24_154709) do
 
-  create_table "climas", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
-  create_table "countries", force: :cascade do |t|
-    t.string "name"
-    t.integer "clima"
-    t.integer "language"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-  end
-
   create_table "infos", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "nationality"
@@ -34,12 +20,6 @@ ActiveRecord::Schema.define(version: 2020_07_24_154709) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_infos_on_user_id"
-  end
-
-  create_table "languages", force: :cascade do |t|
-    t.string "name"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "users", force: :cascade do |t|

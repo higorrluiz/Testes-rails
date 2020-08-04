@@ -11,6 +11,7 @@ RSpec.feature "Users", type: :feature do
 
       fill_in 'Name', with:'Felipe'
       fill_in 'Email', with:'higor@higor'
+      fill_in 'Password', with:123456
       fill_in 'Age', with:10
 
       click_button 'Create User'
@@ -26,11 +27,13 @@ RSpec.feature "Users", type: :feature do
       click_link 'New Series'
 
       fill_in 'Name', with:'Felipe'
-      fill_in 'Email', with:'higor@higor'
+      fill_in 'Password', with:123
 
       click_button 'Create User'
 
       expect(page).to have_content("age can't be blank")
+      expect(page).to have_content("Password is too short")
+      expect(page).to have_content("Email can't be blank")
 
     end
 
@@ -46,6 +49,7 @@ RSpec.feature "Users", type: :feature do
 
       fill_in 'Name', with:'Felipe'
       fill_in 'Email', with:'higor@higor'
+      fill_in 'Password', with:123459
       fill_in 'Age', with:10
 
       click_button 'Update User'
@@ -54,18 +58,23 @@ RSpec.feature "Users", type: :feature do
 
     end
 
-    scenario "Não deve ser atualizado"  do
+    scenario "Não deve ser atualizado" do
 
       visit users_path
       sleep 1
       click_link 'Edit'
 
       fill_in 'Name', with:'Felipe'
-      fill_in 'Email', with:'higor@higor'
+      fill_in 'Email', with:'invalid'
+      fill_in 'Password', with:1236
       fill_in 'Age', with:''
+
+      sleep 10
 
       click_button 'Update User'
 
+      expect(page).to have_content("Email is invalid")
+      expect(page).to have_content("Password is too short")
       expect(page).to have_content("age can't be blank")
 
     end
